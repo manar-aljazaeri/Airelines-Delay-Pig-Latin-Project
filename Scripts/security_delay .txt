@@ -1,0 +1,6 @@
+
+security_delay = FOREACH DelayedFlights GENERATE SecurityDelay;
+security_delay_filtered = FILTER security_ delay BY $0 I= 0;
+sec_delay_group = GROUP security_delay_filtered ALL;
+sec_delay_count = FOREACH sec_delay_group GENERATE COUNT (security_delay_filtered);
+DUMP sec_delay_count;

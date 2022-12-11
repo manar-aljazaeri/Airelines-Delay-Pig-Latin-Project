@@ -1,0 +1,43 @@
+
+
+
+
+DelayedFlights = LOAD '/user/maria_dev/DelayedFlights/Airelines_Delay.csv' USING PigStorage(',') 
+as ( Month:chararray, 
+DayofMonth:int, 
+DayOfWeek:chararray, 
+UniqueCarrier:chararray, 
+FlightNum:int, 
+TailNum:chararray, 
+ActualElapsedTime:int, 
+CRSElapsedTime:int, 
+AirTime:int, 
+ArrDelay:int, 
+DepDelay:int, 
+Origin:chararray, 
+Dest:chararray, 
+Distance:int, 
+TaxiIn:int, 
+TaxiOut:int, 
+Cancelled:int, 
+CancellationCode:chararray, 
+Diverted:int, 
+CarrierDelay:int, 
+WeatherDelay:int, 
+NASDelay:int, 
+SecurityDelay:int, 
+LateAircraftDelay:int);
+
+
+-- Here we can show the count of Flight Delayed in each Month: 
+
+Month = GROUP DelayedFlights BY Month;
+
+NumOfDelayedFlight = FOREACH Month GENERATE group, COUNT(DelayedFlights);
+
+STORE NumOfDelayedFlight INTO 'TotalDelayedByMonth';
+
+DUMP NumOfDelayedFlight;
+
+
+

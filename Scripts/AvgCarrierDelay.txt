@@ -1,0 +1,12 @@
+DelayedFlights = LOAD '/user/maria_dev/Apache_Pig_Weekly_Project/Airelines_Delay.csv' USING PigStorage(',') 
+as ( Month:chararray,DayofMonth:int,DayOfWeek:chararray,UniqueCarrier:chararray,FlightNum:int,TailNum:chararray,ActualElapsedTime:int,
+CRSElapsedTime:int,AirTime:int,ArrDelay:int,DepDelay:int,Origin:chararray,Dest:chararray,Distance:int,TaxiIn:int,TaxiOut:int,Cancelled:int, 
+CancellationCode:chararray,Diverted:int,CarrierDelay:int,WeatherDelay:int,NASDelay:int,SecurityDelay:int,LateAircraftDelay:int);
+
+-- Here we can show the avarage of carrier Delayed: 
+
+Delay_carrier = GROUP DelayedFlights BY UniqueCarrier;
+
+NumOfDelayedFlight = FOREACH Delay_carrier GENERATE group, AVG(DelayedFlights.CarrierDelay);
+
+DUMP NumOfDelayedFlight;

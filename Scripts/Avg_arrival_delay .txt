@@ -1,0 +1,9 @@
+--Q1: What is the Avg of arrival delay
+
+DelayedFlights = LOAD '/user/maria_dev/DelayedFlights/Delayed_Flight.csv' USING PigStorage(',') 
+as (Month:chararray, DayofMonth:int, DayOfWeek:chararray, UniqueCarrier:chararray, FlightNum:int, TailNum:chararray, ActualElapsedTime:int, CRSElapsedTime:int, AirTime:int, ArrDelay:int, DepDelay:int, Origin:chararray, Dest:chararray, Distance:int, TaxiIn:int, TaxiOut:int, Cancelled:int, CancellationCode:chararray, Diverted:int, CarrierDelay:int, WeatherDelay:int, NASDelay:int, SecurityDelay:int, LateAircraftDelay:int);
+
+ArrivalDelay = FOREACH DelayedFlights GENERATE ArrDelay;
+ArrivalDelay_group = GROUP ArrivalDelay ALL;
+ArrivalDelay_AVG = FOREACH ArrivalDelay_group GENERATE AVG(ArrivalDelay);
+DUMP ArrivalDelay_AVG;

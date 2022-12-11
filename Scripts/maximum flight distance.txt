@@ -1,0 +1,6 @@
+
+
+distance = FOREACH DelayedFlights GENERATE Distance;
+distance group = GROUP distance ALL;
+max_distance = FOREACH distance_group GENERATE MAX (distance) ;
+DUMP max_distance;

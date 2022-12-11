@@ -1,0 +1,7 @@
+
+
+DelayedFlights_group = GROUP DelayedFlights BY Dest;
+Result = FORBACH DelayedFlights _group GENERATE group as airport, ROUND_TO(AVG (Delayed-lights. DepDelay), 2) as avg _departure delay;
+Result_sorted = ORDBR Result BY avg departure delay DESC;
+
+DUMP Result sorted;

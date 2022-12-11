@@ -1,0 +1,42 @@
+
+
+‪DelayedFlights = LOAD '/user/maria_dev/DelayedFlights/Airelines_Delay.csv' USING PigStorage(',') ‬
+‪as ( Month:chararray, ‬
+‪DayofMonth:int, ‬
+‪DayOfWeek:chararray, ‬
+‪UniqueCarrier:chararray, ‬
+‪FlightNum:int, ‬
+‪TailNum:chararray, ‬
+‪ActualElapsedTime:int, ‬
+‪CRSElapsedTime:int, ‬
+‪AirTime:int, ‬
+‪ArrDelay:int, ‬
+‪DepDelay:int, ‬
+‪Origin:chararray, ‬
+‪Dest:chararray, ‬
+‪Distance:int, ‬
+‪TaxiIn:int, ‬
+‪TaxiOut:int, ‬
+‪Cancelled:int, ‬
+‪CancellationCode:chararray, ‬
+‪Diverted:int, ‬
+‪CarrierDelay:int, ‬
+‪WeatherDelay:int, ‬
+‪NASDelay:int, ‬
+‪SecurityDelay:int, ‬
+‪LateAircraftDelay:int);‬
+
+‪-- Here we can show the details of Delayed flights with Cancelled by Month: ‬
+‪-- and the count in each Month: ‬
+
+‪CancelledFlight = FILTER DelayedFlights BY (Cancelled == 1);‬
+
+‪CancelledFlightsByMonth = GROUP CancelledFlight BY Month;‬
+
+‪numOfCancelledFlightsByMonth = FOREACH CancelledFlightsByMonth GENERATE COUNT(CancelledFlight);‬
+
+‪DUMP CancelledFlightsByMonth;  ‬
+
+‪DUMP numOfCancelledFlightsByMonth;‬
+
+‪STORE numOfCancelledFlightsByMonth INTO 'CancelledFlights';‬

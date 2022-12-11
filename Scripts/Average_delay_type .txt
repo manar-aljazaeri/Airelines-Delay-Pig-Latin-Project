@@ -1,0 +1,12 @@
+
+DelayType - FOREACH DelayedPlights GENERATE CarrierDelay, WeatherDelay, NASDelay, SecurityDelay, LateAircraftDelay:
+DelayType_group - GROUP DelayType ALL;
+DelayType_AVG - FOREACH DelayType_group GENERATE
+ROUND_TO (AVG (DelayType.CarrierDelay), 2) AS AvgCarrierDelay,
+ROUND_TO (AVG (DelayType.WeatherDelay), 2) AS AvgweatherDelay,
+ROUND_TO (AVG (DelayType-NASDelay), 2) AS AvgNASDelay,
+ROUND_ TO (AVG (DelayType.SecurityDelay), 2) AS AvgSecurityDelay,
+ROUND_TO (AVG (DelayType .Late ircraftDelay), 2) AS AvgLateAircraftDelay;
+
+DESCRIBE DelayType_AVG;
+DUMP DelayType_AVG;
